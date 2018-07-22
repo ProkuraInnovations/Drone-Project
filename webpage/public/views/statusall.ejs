@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<!--manifest="../js/files/status.appcache"-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../css/map.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <script src="../js/libs/socket.io.js"></script>
+    <script src="../js/socketFunction.js"></script>
+    <script src="../js/statusall.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+
+    <title>Drone All | Status</title>
+</head>
+
+<body style="position: relative">
+
+<!-- It is the div which renders the google map api -->
+<div class="container-fluid-fill">
+
+    <div id="map">
+        <img src="../js/files/green.svg"/>
+        <img src="../js/files/red.svg"/>
+    </div>
+
+    <div class="top-row">
+
+        <img class="image-logo img-fluid" src="../js/files/logo.png">
+
+        <input title="radius" placeholder="radius" type="text" id="data" class="form-inline radius-input" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+
+        <button class="btn btn-dark radius-button" type="button" onclick="DrawCircle()">Draw Circle</button>
+
+    </div>
+
+    <div class="top-row">
+
+        <div class="nic-text">NIC Drone Status</div>
+
+        <button type="button" class="btn btn-primary show-parameters" data-toggle="collapse" data-target="#demo">Show</button>
+
+        <button class="btn btn-dark read-mission" type="button" onclick="ReadMission()">Read Mission</button>
+
+        <a href="<%= href %>" id="Download" download class="btn btn-dark download-mission">Download File</a>
+
+        <button class="btn btn-dark clear-mission" type="button" onclick="ClearMission()">Clear Mission</button>
+
+    </div>
+
+    <div class="data-column">
+
+        <div id="demo" class="collapse">
+
+            <!-- It is the div which creates the gps table on the right top side of the web page -->
+
+            <div class="data-sat">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4 theme">Lat:</div>
+                        <div class="col-8 theme" id="lat-data">27.682828</div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4 theme">Lng:</div>
+                        <div class="col-8 theme" id="lng-data">85.321709</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="data-sat-1">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4 theme">AltR:</div>
+                        <div class="col-6 theme" id="altr-data">0</div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4 theme">Alt:</div>
+                        <div class="col-6 theme" id="altitude-data">0</div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4 theme">Sat:</div>
+                        <div class="col-6 theme" id="numSat-data">0</div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4 theme">HDOP:</div>
+                        <div class="col-6 theme" id="hdop-data">100</div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4 theme">FIX:</div>
+                        <div class="col-6 theme" id="fix-data">NO FIX</div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4 theme">Head:</div>
+                        <div class="col-6 theme" id="head-data">0</div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4 theme">DFH:</div>
+                        <div class="col-6 theme" id="DFH-data">0</div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4 theme">EST:</div>
+                        <div class="col-6 theme" id="EST-data">0</div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4 theme">TOF:</div>
+                        <div class="col-6 theme" id="TOF-data">0:0</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- It is the div which creates the velocity table on the left top side of the web page -->
+            <div class="data-vel">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6 theme">GS:</div>
+                        <div class="col-6 theme" id="gs-data">0.000</div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6 theme">AS:</div>
+                        <div class="col-6 theme" id="air-data">0.000</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- It is the div which creates the Other table on the left bottom side of the web page -->
+            <div class="data-other">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-5 theme">Mode:</div>
+                        <div class="col-6 theme" id="mode-data">Unknown</div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-5 theme">Arm:</div>
+                        <div class="col-6 theme" id="arm-data">False</div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-5 theme">EKF:</div>
+                        <div class="col-6 theme" id="ekf-data">False</div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-5 theme">Status:</div>
+                        <div class="col-6 theme" id="status-data">Unknown</div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-5 theme">LiDar:</div>
+                        <div class="col-6 theme" id="lidar-data">0</div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-5 theme">Volt:</div>
+                        <div class="col-6 theme" id="volt-data">0</div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="snackbar">Message</div>
+
+</div>
+
+<!-- Script for map rendering and callback with the initmap written in the status.js -->
+<script defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUN4qNqgyU_VHeKpqBky9YB93bIX-gy7w&callback=initmap">
+</script>
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="../js/libs/jquery-3.2.1.slim.min.js"></script>
+<script src="../js/libs/popper.min.js"></script>
+<script src="../js/libs/bootstrap.min.js"></script>
+<script async defer src="../js/libs/math.min.js"></script>
+<script async defer src="../js/function.js"></script>
+
+</body>
+
+
+</html>

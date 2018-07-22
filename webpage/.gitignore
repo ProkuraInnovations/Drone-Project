@@ -1,0 +1,11 @@
+.idea/
+node_modules/
+public/js/files/missions/mission.txt
+public/js/files/missions/oldmission.txt
+public/js/files/missions/missionNangi.txt
+public/js/files/missions/oldmissionNangi.txt
+public/js/files/missions/missionPulchowk.txt
+public/js/files/missions/oldmissionPulchowk.txt
+public/js/files/index.appcache
+public/js/files/status.appcache
+server/socketio/test.js

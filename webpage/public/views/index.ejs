@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--manifest="../js/files/index.appcache"-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/style.min.css">
+    <script src="../js/index.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <style>
+
+    </style>
+
+    <title><%= title %></title>
+</head>
+
+<body class="centered-form">
+
+<div class="centered-form_form">
+
+    <img class="image-logo" src="../js/files/logo.png">
+
+    <form action="/" method="post">
+
+        <div class="form-field">
+            <h3><%= title %></h3>
+        </div>
+        <div class="form-field">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" autofocus required/>
+        </div>
+        <div class="form-field">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required/>
+        </div>
+        <div class="form-field">
+            <input type="radio" name="location" id="location1" value="default" checked >
+            <label for="location1">default</label>
+
+            <input type="radio" name="location" id="location2" value="nangi">
+            <label for="location2">nangi</label>
+
+            <input type="radio" name="location" id="location3" value="pulchowk">
+            <label for="location3">pulchowk</label>
+        </div>
+        <div class="form-field">
+            <button type="submit">Login</button>
+        </div>
+    </form>
+</div>
+
+</body>
+
+
+</html>
