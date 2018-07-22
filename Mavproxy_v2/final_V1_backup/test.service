@@ -1,0 +1,12 @@
+[Unit]
+Description = My service
+After=network.target
+
+[Service]
+Type=forking
+Restart=on-failure
+RestartSec=3
+ExecStart = /home/pi/startup/test.sh
+
+[Install]
+WantedBy=multi-user.target
